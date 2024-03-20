@@ -40,6 +40,14 @@ const nextConfig = {
       },
     ];
   },
+  env: {
+    REPLICATE_API_TOKEN: process.env.REPLICATE_API_TOKEN,
+    imageKitPK: process.env.imageKitPK,
+    imageKitSK: process.env.imageKitSK,
+    imageKitUE: process.env.imageKitUE,
+    DATABASE_URL: process.env.DATABASE_URL,
+    NGROK_HOST: process.env.NGROK_HOST
+  }
 };
 
 module.exports = nextConfig;

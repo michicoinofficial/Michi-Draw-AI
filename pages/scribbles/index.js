@@ -14,14 +14,7 @@ export default function RecentScribbles({ predictions }) {
       </Head>
       <main className="container max-w-[1024px] mx-auto p-5 ">
         <div className="container max-w-[512px] mx-auto">
-          <hgroup>
-            <h1 className="text-center text-5xl font-bold m-4">
-              {pkg.appName}
-            </h1>
-            <p className="text-center text-xl opacity-60 m-4">
-              {pkg.appSubtitle}
-            </p>
-          </hgroup>
+          
         </div>
 
         <Predictions predictions={predictions} />

@@ -3,6 +3,7 @@ import PromptForm from "components/prompt-form";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import Predictions from "components/predictions";
+import Header from "components/header";
 import Error from "components/error";
 import Welcome from "components/welcome";
 import uploadFile from "lib/upload";
@@ -42,7 +43,7 @@ export default function Home() {
     setIsProcessing(true);
 
     const fileUrl = await uploadFile(scribble);
-
+    
     const body = {
       prompt,
       image: fileUrl,
@@ -108,7 +109,8 @@ export default function Home() {
     if (replicateApiToken) {
       setWelcomeOpen(false);
     } else {
-      setWelcomeOpen(true);
+      localStorage.setItem("replicate_api_token", process.env.REPLICATE_API_TOKEN)
+      setWelcomeOpen(false);
     }
   }, []);
 
@@ -131,14 +133,7 @@ export default function Home() {
           <Welcome handleTokenSubmit={handleTokenSubmit} />
         ) : (
           <div className="container max-w-[512px] mx-auto">
-            <hgroup>
-              <h1 className="text-center text-5xl font-bold m-4">
-                {pkg.appName}
-              </h1>
-              <p className="text-center text-xl opacity-60 m-4">
-                {pkg.appSubtitle}
-              </p>
-            </hgroup>
+            <Header />
 
             <Canvas
               startingPaths={seed.paths}
@@ -165,7 +160,6 @@ export default function Home() {
         />
       </main>
 
-      <Script src="https://js.bytescale.com/upload-js-full/v1" />
     </>
   );
 }
