@@ -12,7 +12,7 @@ export default async function handler(req) {
   });
   const predictionId = req.nextUrl.searchParams.get("id");
   const prediction = await replicate.predictions.get(predictionId);
-
+  console.log(prediction, predictionId)
   if (prediction?.error) {
     return NextResponse.json({ detail: prediction.error }, { status: 500 });
   }
