@@ -13,10 +13,6 @@ import seeds from "lib/seeds";
 import pkg from "../package.json";
 import sleep from "lib/sleep";
 
-const HOST = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
-
 export default function Home() {
   const [error, setError] = useState(null);
   const [submissionCount, setSubmissionCount] = useState(0);
@@ -121,10 +117,6 @@ export default function Home() {
         <meta name="description" content={pkg.appMetaDescription} />
         <meta property="og:title" content={pkg.appName} />
         <meta property="og:description" content={pkg.appMetaDescription} />
-        <meta
-          property="og:image"
-          content={`${HOST}/og-b7xwc4g4wrdrtneilxnbngzvti.jpg`}
-        />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
