@@ -54,16 +54,21 @@ export default function Home() {
       },
       body: JSON.stringify(body),
     });
-    let prediction = await response.json();
+    try {
+      let prediction = await response.json();
 
-    setPredictions((predictions) => ({
-      ...predictions,
-      [prediction.id]: prediction,
-    }));
+      setPredictions((predictions) => ({
+        ...predictions,
+        [prediction.id]: prediction,
+      }));
 
-    if (response.status !== 201) {
-      setError(prediction.detail);
-      return;
+      if (response.status !== 201) {
+        console.log(prediction)
+        setError(prediction.detail);
+        return;
+      }
+    } catch (error) {
+      console.log(error)
     }
 
     while (

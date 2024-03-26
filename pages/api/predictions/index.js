@@ -35,7 +35,7 @@ export default async function handler(req) {
   });
 
   if (prediction?.error) {
-    return NextResponse.json({ detail: prediction.error }, { status: 500 });
+    return NextResponse.json({ detail: prediction.error, webhook: `${WEBHOOK_HOST}/api/replicate-webhook`, data: {...input} }, { status: 500 });
   }
 
   return NextResponse.json(prediction, { status: 201 });
