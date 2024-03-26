@@ -55,8 +55,8 @@ export default function Home() {
       body: JSON.stringify(body),
     });
     try {
-      let prediction = await response.json();
-
+      prediction = await response.json();
+      
       setPredictions((predictions) => ({
         ...predictions,
         [prediction.id]: prediction,
@@ -89,17 +89,18 @@ export default function Home() {
         },
       });
       try {
-        prediction = await response.json();
+        let auxprediction = await response.json();
+        if (auxprediction)
         setPredictions((predictions) => ({
           ...predictions,
-          [prediction.id]: prediction,
+          [prediction.id]: auxprediction,
         }));
         if (response.status !== 200) {
           setError(prediction.detail);
           return;
         }
       } catch (error) {
-        console.log(error, prediction)
+        console.log(error)
       }
     }
 
