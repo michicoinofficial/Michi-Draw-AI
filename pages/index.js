@@ -26,7 +26,7 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    let prediction = ""
     // track submissions so we can show a spinner while waiting for the next prediction to be created
     setSubmissionCount(submissionCount + 1);
 
@@ -90,11 +90,13 @@ export default function Home() {
       });
       try {
         let auxprediction = await response.json();
-        if (auxprediction)
-        setPredictions((predictions) => ({
-          ...predictions,
-          [prediction.id]: auxprediction,
-        }));
+        if (auxprediction){
+          prediction.status = auxprediction.status
+          setPredictions((predictions) => ({
+            ...predictions,
+            [prediction.id]: auxprediction,
+          }));
+        }
         if (response.status !== 200) {
           setError(prediction.detail);
           return;
