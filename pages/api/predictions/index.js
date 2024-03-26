@@ -11,7 +11,7 @@ async function getObjectFromRequestBodyStream(body) {
 
 const WEBHOOK_HOST = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : process.env.NGROK_HOST;
+  : (process.env.NGROK_HOST || process.env.NEXT_PUBLIC_NGROK_HOST);
 
 export default async function handler(req) {
   const input = await getObjectFromRequestBodyStream(req.body);

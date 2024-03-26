@@ -105,7 +105,7 @@ export default function Home() {
     if (replicateApiToken) {
       setWelcomeOpen(false);
     } else {
-      localStorage.setItem("replicate_api_token", process.env.REPLICATE_API_TOKEN)
+      localStorage.setItem("replicate_api_token", process.env.REPLICATE_API_TOKEN || process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN)
       setWelcomeOpen(false);
     }
   }, []);
