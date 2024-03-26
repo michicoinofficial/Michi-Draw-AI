@@ -71,6 +71,11 @@ export default function Home() {
       prediction.status !== "failed"
     ) {
       await sleep(500);
+      if (!prediction.id){
+        console.log(prediction)
+        continue
+      }
+
       const response = await fetch("/api/predictions/" + prediction.id, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -78,14 +83,18 @@ export default function Home() {
           )}`,
         },
       });
-      prediction = await response.json();
-      setPredictions((predictions) => ({
-        ...predictions,
-        [prediction.id]: prediction,
-      }));
-      if (response.status !== 200) {
-        setError(prediction.detail);
-        return;
+      try {
+        prediction = await response.json();
+        setPredictions((predictions) => ({
+          ...predictions,
+          [prediction.id]: prediction,
+        }));
+        if (response.status !== 200) {
+          setError(prediction.detail);
+          return;
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
 
