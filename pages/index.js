@@ -99,7 +99,7 @@ export default function Home() {
           return;
         }
       } catch (error) {
-        console.log(error)
+        console.log(error, prediction)
       }
     }
 
