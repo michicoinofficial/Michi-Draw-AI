@@ -10,7 +10,12 @@ export default async function handler(req) {
     auth: replicate_api_token,
     userAgent: `${packageData.name}/${packageData.version}`,
   });
-  const predictionId = req.nextUrl.searchParams.get("id");
+  let predictionId = req.nextUrl.searchParams.get("id");
+  if (!predictionId) {
+    const url = new URL(req.url);
+    const urlPathName = url.pathname.split("/");
+    predictionId = urlPathName.pop()
+  }
   const prediction = await replicate.predictions.get(predictionId);
   
   if (prediction?.error) {
