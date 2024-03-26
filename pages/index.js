@@ -54,21 +54,16 @@ export default function Home() {
       },
       body: JSON.stringify(body),
     });
-    try {
-      prediction = await response.json();
+    prediction = await response.json();
       
-      setPredictions((predictions) => ({
-        ...predictions,
-        [prediction.id]: prediction,
-      }));
+    setPredictions((predictions) => ({
+      ...predictions,
+      [prediction.id]: prediction,
+    }));
 
-      if (response.status !== 201) {
-        console.log(prediction)
-        setError(prediction.detail);
-        return;
-      }
-    } catch (error) {
-      console.log(error)
+    if (response.status !== 201) {
+      setError(prediction.detail);
+      return;
     }
 
     while (
@@ -76,11 +71,7 @@ export default function Home() {
       prediction.status !== "failed"
     ) {
       await sleep(500);
-      if (!prediction.id){
-        console.log(prediction)
-        continue
-      }
-
+      
       const response = await fetch("/api/predictions/" + prediction.id, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -88,21 +79,17 @@ export default function Home() {
           )}`,
         },
       });
-      try {
-        let auxprediction = await response.json();
-        if (auxprediction){
-          prediction.status = auxprediction.status
-          setPredictions((predictions) => ({
-            ...predictions,
-            [prediction.id]: auxprediction,
-          }));
-        }
-        if (response.status !== 200) {
-          setError(prediction.detail);
-          return;
-        }
-      } catch (error) {
-        console.log(error)
+      let auxprediction = await response.json();
+      if (auxprediction){
+        prediction.status = auxprediction.status
+        setPredictions((predictions) => ({
+          ...predictions,
+          [prediction.id]: auxprediction,
+        }));
+      }
+      if (response.status !== 200) {
+        setError(prediction.detail);
+        return;
       }
     }
 
@@ -111,7 +98,6 @@ export default function Home() {
 
   const handleTokenSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target[0].value);
     localStorage.setItem("replicate_api_token", e.target[0].value);
     setWelcomeOpen(false);
   };
@@ -122,7 +108,7 @@ export default function Home() {
     if (replicateApiToken) {
       setWelcomeOpen(false);
     } else {
-      localStorage.setItem("replicate_api_token", process.env.REPLICATE_API_TOKEN || process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN)
+      localStorage.setItem("replicate_api_token", process.env.REPLICATE_API_TOKEN)
       setWelcomeOpen(false);
     }
   }, []);
